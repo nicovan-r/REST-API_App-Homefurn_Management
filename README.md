@@ -7,22 +7,22 @@ Database table can do CRUD from web app: users, storage_location, material_list,
 
 To test the app, use existing user in db.db file in database folder with username: "admin1", password: "admin1".
 
-Make sure packages below were installed or pip install packages: 
-cryptography
-flask 
-flask-login 
-flask-marshmallow 
-flask-migrate 
-flask-sqlalchemy 
-flask-wtf 
-marshmallow 
-marshmallow-sqlalchemy 
-mysql 
-mysql-connector 
-mysql-connector-python 
-mysql-connector-python-rf 
-pymysql 
-pipenv
+Make sure packages below were installed or pip install packages: <br>
+cryptography<br>
+flask <br>
+flask-login <br>
+flask-marshmallow <br>
+flask-migrate <br>
+flask-sqlalchemy <br>
+flask-wtf <br>
+marshmallow <br>
+marshmallow-sqlalchemy <br>
+mysql <br>
+mysql-connector <br>
+mysql-connector-python <br>
+mysql-connector-python-rf <br>
+pymysql <br>
+pipenv<br>
 sqlalchemy 
 werkzeug 
 wtforms
