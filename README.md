@@ -7,7 +7,7 @@ Database table can do CRUD from web app: users, storage_location, material_list,
 
 To test the app, use existing user in db.db file in database folder with username: "admin1", password: "admin1".
 
-To make this app run, pip install packages: 
+Make sure packages below were installed or pip install packages: 
 cryptography
 flask 
 flask-login 
