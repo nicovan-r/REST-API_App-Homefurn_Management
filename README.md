@@ -1,5 +1,5 @@
 Homefurn Management App
-This is material and product management created by Nicovan Renardy
+This is material and product data management app created by Nicovan Renardy
 
 This app uses MySQL database and SQLAlchemy connected to web interface through REST API Create virtual environment, pip install packages, activate MySQL, and run python app.py to use this app.
 
