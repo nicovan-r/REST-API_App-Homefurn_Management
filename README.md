@@ -1,11 +1,11 @@
 Homefurn Management Web App with REST-API<br><br>
 This is material and product data management app created by Nicovan Renardy
 
-This app uses MySQL database and SQLAlchemy connected to web interface through REST API Create virtual environment, pip install packages, activate MySQL, and run python app.py to use this app.
+This app uses MySQL database and SQLAlchemy connected to web interface through REST API Create virtual environment, pip install packages, activate MySQL
 
 Database table can do CRUD from web app: users, storage_location, material_list, product_list.
 
-To test the app, use existing user in db.db file in database folder with username: "admin1", password: "admin1".
+To test the app, run python app.py and .use existing user in db.db file in database folder with username: "admin1", password: "admin1".
 
 Make sure packages below were installed or pip install packages: <br>
 cryptography<br>
