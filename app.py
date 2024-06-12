@@ -81,6 +81,41 @@ class Users(db.Model, UserMixin):
     created_by = db.Column(db.Integer)
     modified_by = db.Column(db.Integer)
 
+#create model: AccessRight
+class AccessRight(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    access_code = db.Column(db.String(30), nullable=False, unique=True)
+    access_name = db.Column(db.String(300), nullable=False)
+    access_desc = db.Column(db.String(300))
+
+#access_right_list for access right SelectField
+access_right_list=[]
+for arl in AccessRight.query.all():
+    index = 0
+    access_right_list.insert(index, (arl.access_code,arl.access_name))
+    index+=1  
+
+#create model: StorageLocation
+class StorageLocation(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    storage_location_code = db.Column(db.String(30), nullable=False, unique=True)
+    storage_location_name = db.Column(db.String(300), nullable=False)
+    usable = db.Column(db.Boolean())
+    date_created = db.Column(db.DateTime)
+    date_modified = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '{}'.format(self.storage_location_name)
+    
+#storage_loc_list for storage location SelectField
+def storage_loc_list_query():
+    storage_loc_list=[]
+    for strl in StorageLocation.query.filter_by(usable=1):
+        index = 0
+        storage_loc_list.insert(index, (strl.storage_location_code,strl.storage_location_name))
+        index+=1
+    return storage_loc_list 
+
 #create model: ProductMaterial (material_list and product_list relation table)
 class ProductMaterial(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -123,48 +158,6 @@ class ProductList(db.Model):
     modified_by = db.Column(db.Integer)
     producter = db.relationship('ProductMaterial', backref='producter')
 
-#create model: StorageLocation
-class StorageLocation(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    storage_location_code = db.Column(db.String(30), nullable=False, unique=True)
-    storage_location_name = db.Column(db.String(300), nullable=False)
-    usable = db.Column(db.Boolean())
-    date_created = db.Column(db.DateTime)
-    date_modified = db.Column(db.DateTime)
-
-    def __repr__(self):
-        return '{}'.format(self.storage_location_name)
-    
-#storage_loc_list for storage location SelectField
-
-def storage_loc_list_query():
-    storage_loc_list=[]
-    for strl in StorageLocation.query.filter_by(usable=1):
-        index = 0
-        storage_loc_list.insert(index, (strl.storage_location_code,strl.storage_location_name))
-        index+=1
-    return storage_loc_list 
-   
-#create model: AccessRight
-class AccessRight(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    access_code = db.Column(db.String(30), nullable=False, unique=True)
-    access_name = db.Column(db.String(300), nullable=False)
-    access_desc = db.Column(db.String(300))
-
-#access_right_list for access right SelectField
-access_right_list=[]
-for arl in AccessRight.query.all():
-    index = 0
-    access_right_list.insert(index, (arl.access_code,arl.access_name))
-    index+=1
-    
-#Form: LoginForm
-class LoginForm(FlaskForm):
-    username = StringField("Username",validators=[DataRequired()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    submit = SubmitField("Login")
-
 #Form: UserForm
 class UserForm(FlaskForm):
     name = StringField("Name",validators=[DataRequired()])
@@ -178,6 +171,20 @@ class UserForm(FlaskForm):
     image = FileField('Profile Picture')
     del_image = BooleanField('Turn this switch on to Delete Image')
     submit = SubmitField("Save")
+
+#Form: LoginForm
+class LoginForm(FlaskForm):
+    username = StringField("Username",validators=[DataRequired()])
+    password = PasswordField("Password", validators=[DataRequired()])
+    submit = SubmitField("Login")
+
+#Form: StorageLocationForm
+class StorageLocationForm(FlaskForm):
+    storage_location_code = StringField("Str loc. Code",validators=[DataRequired()])
+    storage_location_name = StringField("Str loc. Name",validators=[DataRequired()])
+    usable = BooleanField('Usable?')
+    
+    submit = SubmitField("Submit")
 
 #Form: MaterialForm
 class MaterialForm(FlaskForm):
@@ -206,13 +213,7 @@ class ProductForm(FlaskForm):
     del_image = BooleanField('Turn this switch on to Delete Image')
     submit = SubmitField("Submit")
 
-#Form: StorageLocationForm
-class StorageLocationForm(FlaskForm):
-    storage_location_code = StringField("Str loc. Code",validators=[DataRequired()])
-    storage_location_name = StringField("Str loc. Name",validators=[DataRequired()])
-    usable = BooleanField('Usable?')
-    
-    submit = SubmitField("Submit")
+
     
 #create route decorator
 @app.route('/', methods=['GET','POST'])
@@ -367,7 +368,7 @@ def edit_profile(id):
             edit_profile.address = request.form['address']
             edit_profile.username = request.form['username']
             edit_profile.password = request.form['password']
-            edit_profile.admin = form.admin.data
+            
             edit_profile.access_right = request.form['access_right']
         
         try:
@@ -387,10 +388,11 @@ def edit_profile(id):
                 
             edit_profile.date_modified = datetime.today()
             edit_profile.modified_by = current_user_id
-            if form.admin.data == False and get_admin_users == 1:
-                flash("This operation is cannot be processed, there must be one user to be admin!")
+            if form.admin.data == False and get_admin_users == 1 and edit_profile.admin == 1:
+                flash("This operation is cannot be processed, at least there must be one user to be admin!")
                 return redirect(url_for('manage_users'))
             else:
+                edit_profile.admin = form.admin.data
                 db.session.commit()
                 flash("Profile saved.")
                 if edit_profile is not None and active_user_id.admin == 1:
@@ -674,7 +676,7 @@ def create_material():
 
     #GET data
     my_materials = MaterialList.query.all()
-    MaterialForm.storage_location.choices = storage_loc_list_query()
+    form.storage_location.choices = storage_loc_list_query()
     return render_template("create.html",
                            data=data,
                            page='Create New Material',
