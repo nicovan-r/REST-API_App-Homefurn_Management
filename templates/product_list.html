@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Product List
+                </div>
+            </div>
+                <span><a class="submit" href="{{ url_for('create_product', data='product') }}">New</a></span>
+                <table id="table" class="display">
+                    <thead style="font-weight: bold">
+                        <tr style="background-color: rgba(255, 255, 255, 0.7)">
+                            <td>Model no.</td>
+                            <td>Name</td>
+                            <td>Image</td>
+                            <td>Quantity</td>
+                            <td>QTY UoM</td>
+                            <td>Weight</td>
+                            <td>Weight UoM</td>
+                            <td>Str Loc.</td>
+                            <td>Currency</td>
+                            <td>Price</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    
+                    <tbody style="background-color: rgba(255, 255, 255, 0.7)">
+                        {% for my_products in my_products %}
+                            <tr>
+                            <td>{{ my_products.model_no }}</td>
+                            <td>{{ my_products.name }}</td>
+                            <td>{% if my_products.image != 'N/A' %}
+                                    <img src="{{ url_for('static', filename ='img/upload/product/'+my_products.image) }}" class="table-image" title="image" alt="Image not uploaded">
+                                {% else %}
+                                    No image
+                                {% endif %}
+                            </td>
+                            <td>{{ my_products.qty }}</td>
+                            <td>{{ my_products.qty_uom }}</td>
+                            <td>{{ my_products.weight }}</td>
+                            <td>{{ my_products.weight_uom }}</td>
+                            <td>{{ my_products.storage_location }}</td>
+                            <td>{{ my_products.currency }}</td>
+                            <td>{{ my_products.price }}</td>
+                            <td> <a href="{{ url_for('update_product', data='product', id=my_products.id) }}" class="submit-edit">look/edit</a><br>
+                                <a href="{{ url_for('delete_product', data='product', id=my_products.id) }}" class="submit-delete">delete</a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+{% endblock %}

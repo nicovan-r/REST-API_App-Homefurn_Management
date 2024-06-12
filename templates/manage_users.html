@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Manage Users
+                </div>
+            </div>
+            <span><a class="submit" href="{{ url_for('create_user') }}">New</a></span>
+                <table id="table" class="display">
+                    <thead style="font-weight: bold">
+                        <tr style="background-color: rgba(255, 255, 255, 0.7)">
+                            <td>ID</td>
+                            <td>Name</td>
+                            <td>Birth Date</td>
+                            <td>Phone Number</td>
+                            <td>Address</td>
+                            <td>Username</td>
+                            <td>Password</td>
+                            <td>Admin/User</td>
+                            <td>Profile Pic</td>
+                            <td>Registered Date</td>
+                            <td>Modified Date</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    
+                    <tbody style="background-color: rgba(255, 255, 255, 0.7)">
+                        {% for my_users in my_users %}
+                            <tr>
+                            <td>{{ my_users.id }}</td>
+                            <td>{{ my_users.name }}</td>
+                            <td>{{ my_users.birth_date }}</td>
+                            <td>{{ my_users.phone_num }}</td>
+                            <td>{{ my_users.address }}</td>
+                            <td>{{ my_users.username }}</td>
+                            <td>{{ my_users.password }}</td>
+                            <td>{% if my_users.admin == True %}
+                                Admin
+                                {% else %}
+                                Basic User
+                                {% endif %}
+                            </td>
+                            <td>{% if my_users.image != 'N/A' %}
+                                    <img src="{{ url_for('static', filename ='img/upload/profile/'+my_users.image) }}"class="table-image" title="image" alt="Image not uploaded">
+                                {% else %}
+                                    No image
+                                {% endif %}
+                            </td>
+                            <td>{{ my_users.date_created }}</td>
+                            <td>{{ my_users.date_modified }}</td>
+                            <td> <a href="{{ url_for('edit_profile', id=my_users.id) }}" class="submit-edit">look/edit</a>
+                                <br>
+                                <a href="{{ url_for('delete_user', id=my_users.id) }}" class="submit-delete">delete</a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+{% endblock %}

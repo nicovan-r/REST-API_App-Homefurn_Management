@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Home - HomeFurn Management</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename ='img/page-favicon.png' ) }}">
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <!-- <link rel='stylesheet' type='text/css' media='screen' href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css'> -->
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col col-1">
+            {% for message in get_flashed_messages() %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <div style="font-weight: bold;font-size: 20pt;color: rgb(184, 186, 76);text-align: center;">{{ message }}</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+            <p>&nbsp;</p>
+            <div class="text">
+                
+            </div>
+            <div>&nbsp;</div>
+            <div>{{ my_users.name}}</div>
+            <br>
+            {% if my_users.image != 'N/A' %}
+            <div><img src="{{ url_for('static', filename ='img/upload/profile/'+my_users.image) }}" height="100" title="image" alt="Image not uploaded" style="overflow: hidden; border-radius: 50%;"></div>
+            
+            {% endif %}
+            <div>&nbsp;</div>
+            {% if my_users.admin == 1 %}
+            <div><a href="{{ url_for('edit_profile', id=my_users.id) }}">Edit My Profile</a></div>
+            <div><a href="{{ url_for('manage_users') }}">Manage Users</a></div>
+            {% else %}
+            <div><a href="{{ url_for('edit_profile', id=my_users.id) }}">Change Proflie Picture</a></div>
+            {% endif %}
+            <div>&nbsp;</div>
+            <div><a href="{{ url_for('logout') }}">Logout</a></div>
+        </div>
+        <div class="col col-2">
+            <div class="login-form">
+                <div class="brand-name">
+                    Homefurn
+                </div>
+                
+                <br><br><br>
+                    <span><div></div>
+                        <a class="submit" href="{{ url_for('product') }}" style="height: auto;"><strong>Product List</strong><div>(Total Record count: {{ count_product }})</div></a></span>
+                <br><br><br>
+                    <span><a class="submit" href="{{ url_for('material') }}" style="height: auto;"><strong>Product Material List</strong><div>(Total Record count: {{ count_material }})</div></a></span>
+                <br><br><br>
+                {% if my_users.admin == 1 %}
+                    <span><a class="submit" href="{{ url_for('storage_location') }}" style="height: auto;"><strong>Storage Location Setup (Admin Right)</strong></a></span>
+                {% endif %}
+                </div>
+        </div>
+    </div>
+</body>
+</html>

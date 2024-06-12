@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Material List
+                </div>
+            </div>
+                <span><a class="submit" href="{{ url_for('create_material', data='material') }}">New</a></span>
+                <table id="table" class="display" style="width: 100%;background-color: rgba(255, 255, 255, 0.7)">
+                    <thead style="font-weight: bold;background-color: rgba(255, 255, 255, 0.7)">
+                        <tr>
+                            <td>Barcode</td>
+                            <td>Name</td>
+                            <td>Image</td>
+                            <td>Quantity</td>
+                            <td>Unit of Measure</td>
+                            <td>Consumable</td>
+                            <td>Storage Location</td>
+                            <td>Action</td>
+                        </tr>
+                    </thead>
+                    
+                    <tbody style="background-color: rgba(255, 255, 255, 0.7)">
+                        {% for my_materials in my_materials %}
+                            <tr>
+                            <td>{{ my_materials.barcode }}</td>
+                            <td>{{ my_materials.name }}</td>
+                            <td>{% if my_materials.image != 'N/A' %}
+                                    <img src="{{ url_for('static', filename ='img/upload/material/'+my_materials.image) }}" class="table-image" title="image" alt="Image not uploaded">
+                                {% else %}
+                                    No image
+                                {% endif %}
+                            </td>
+                            <td>{{ my_materials.qty }}</td>
+                            <td>{{ my_materials.uom }}</td>
+                            <td>{% if my_materials.consumable == True %}
+                                Yes
+                                {% else %}
+                                No
+                                {% endif %}
+                            </td>
+                            <td>{{ my_materials.storage_location }}</td>
+                            <td> <a href="{{ url_for('update_material', data='material', id=my_materials.id) }}" class="submit-edit">look/edit</a> 
+                                <br>
+                                <a href="{{ url_for('delete_material', data='material', id=my_materials.id) }}" class="submit-delete">delete</a> 
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+{% endblock %}

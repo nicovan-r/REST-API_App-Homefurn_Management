@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+Create New {{ data }}
+</div>
+
+<form method="POST" class="form-data" enctype="multipart/form-data">
+    {% if data == "material" %}
+    <div>{{ form.submit(class="btn btn-success") }}&nbsp;&nbsp;
+        <a href="{{ url_for('material') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+        {{ form.hidden_tag()}}
+        <table>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{{ form.barcode.label(class="form-label")}}</td>
+                <td>&ensp;&ensp;&ensp;</td>
+                <td style="width: 25cm;">{{ form.barcode(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.name.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.name(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.qty.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.qty(type="number", class="input-field", step="0.1", min="0", oninput="this.value = 
+                    !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.uom.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.uom(class="input-field") }}</td>
+            </tr>  
+            <tr>
+                <td>{{ form.consumable.label(class="form-label")}}</td>
+                <td></td>
+                <td><div class="form-check form-switch">{{ form.consumable(class="form-check-input", role="switch") }}</div></td>
+            </tr> 
+            <tr>
+                <td>{{ form.storage_location.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.storage_location(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.image.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.image(class="form-control") }}</td>
+            </tr>  
+            
+        </table>
+      
+    {% elif data == "product" %}
+    <div>{{ form.submit(class="btn btn-success") }}&nbsp;&nbsp;
+        <a href="{{ url_for('product') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+        {{ form.hidden_tag()}}
+        <table>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{{ form.model_no.label(class="form-label")}}</td>
+                <td>&ensp;&ensp;&ensp;</td>
+                <td style="width: 25cm;">{{ form.model_no(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.name.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.name(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.qty.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.qty(type="number", class="input-field", step="0.1", min="0", oninput="this.value = 
+                    !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.qty_uom.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.qty_uom(class="input-field") }}</td>
+            </tr>  
+            <tr>
+                <td>{{ form.weight.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.weight(class="input-field", step="0.1", min="0", oninput="this.value = 
+                    !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.weight_uom.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.weight_uom(class="input-field") }}</td>
+            </tr>  
+            <tr>
+                <td>{{ form.storage_location.label(class="form-label") }}</td>
+                <td></td>
+                <td>{{ form.storage_location(class="input-field") }}</td>
+            </tr> 
+            <tr>
+                <td>{{ form.currency.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.currency(class="input-field") }}</td>
+            </tr> 
+            <tr>
+                <td>{{ form.price.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.price(class="input-field", min="0", oninput="this.value = 
+                    !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+            </tr> 
+            <tr>
+                <td>{{ form.image.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.image(class="form-control") }}</td>
+            </tr>  
+            
+        </table>
+        {% elif data == "storage_location" %}
+    <div>{{ form.submit(class="btn btn-success") }}&nbsp;&nbsp;
+        <a href="{{ url_for('storage_location') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+        {{ form.hidden_tag()}}
+        <table>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{{ form.storage_location_code.label(class="form-label")}}</td>
+                <td>&ensp;&ensp;&ensp;</td>
+                <td style="width: 25cm;">{{ form.storage_location_code(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.storage_location_name.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.storage_location_name(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.usable.label(class="form-label")}}</td>
+                <td></td>
+                <td><div class="form-check form-switch">{{ form.usable(class="form-check-input", role="switch") }}</div></td>
+            </tr>
+            
+            
+        </table>
+    {% endif %}
+</form>
+{% endblock %}

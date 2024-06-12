@@ -1,0 +1,231 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+body{
+    background: url("../img/loginbg.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0px;
+}
+.container{
+    display: flex;
+    position: absolute;
+    width: 88%;
+    bottom: 0%;
+    height: 96%;
+    border-radius: 12px;
+    background-color: rgba(221, 221, 221, 0.837);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+.col-1{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 40%;
+    background-color: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(50px);
+    border-radius: 0 20% 20% 0;
+    transition: border-radius .3s;
+}
+.col-1 .text{
+    margin-left: 1cm;
+    margin-right: 1cm;
+    font-size: large;
+    text-align: center;
+}
+.col-2{
+    position: relative;
+    align-items: center;
+    padding: 30px;
+    width: 100%;
+    overflow-y: auto;
+    height: auto;
+}
+.col-2 .login{
+    vertical-align: middle;
+}
+.btn-box{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.col-2 .input .submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height:20px;
+    font-weight: 500;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: rgba(27, 177, 227, 0.411);
+    color: rgb(0, 0, 0);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: .5s;
+}
+.col-2 .input .submit:hover{
+    background-color: rgb(1, 55, 102);
+    color: rgb(255, 255, 255);
+}
+.submit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height:20px;
+    font-weight: 500;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: rgba(27, 177, 227, 0.411);
+    color: rgb(0, 0, 0);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+.submit:hover{
+    background-color: rgb(1, 55, 102);
+    color: rgb(255, 255, 255);
+}
+.submit-edit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height:20px;
+    font-weight: 500;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: cadetblue;
+    color: rgb(255, 255, 255);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+.submit-edit:hover{
+    background-color: rgb(39, 69, 69);
+    color: rgb(255, 255, 255);
+}
+.submit-delete{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height:20px;
+    font-weight: 500;
+    padding: 5px 20px;
+    border: none;
+    border-radius: 30px;
+    background-color: rgb(229, 79, 79);
+    color: rgb(255, 255, 255);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: .5s;
+    text-decoration: none;
+}
+.submit-delete:hover{
+    background-color: rgb(155, 49, 49);
+    color: rgb(255, 255, 255);
+}
+.login-form-my{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    padding: 0 0vw;
+    transition: .3s;
+}
+.form-title{
+    color: rgb(0, 0, 0);
+    font-size: 28px;
+    font-weight: 600;
+    text-shadow: 2px 3px 5px rgba(0,0,0,0.5);
+}
+.brand-name{
+    color: rgb(18, 119, 153);
+    font-size: 35pt;
+    font-weight: 600;
+    text-shadow: 2px 3px 5px rgba(255, 255, 255, 0.5);
+    text-align: center;
+    font-family: "Glorious Christmas";
+    src: url('../font/GloriousChristmas-BLWWB.ttf');
+}
+.table-image{
+    height: 2.5cm;
+}
+.form-image{
+    height: 6cm;
+}
+.form-inputs{
+    width: 100%;
+}
+.form-label{
+    font-weight: bold;
+}
+.input{
+    position: relative;
+}
+.input-field{
+    width: 100%;
+    height:1cm;
+    padding: 0 15px;
+    margin: 10px 0;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    backdrop-filter: vlue(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.input-field-icon{
+    height:1cm;
+    padding: 0 15px;
+    margin: 10px 0;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    backdrop-filter: vlue(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+::placeholder{
+    color: rgb(112, 112, 112);
+    font-size: 15px;
+}
+.input .icon{
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    color: white;
+}
+.form-data{
+    width: 100%;
+    font-size: medium;
+}
+.flash_alert{
+    font-size: 12pt;
+}

@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+Edit a {{ data }}
+</div>
+
+<form method="post" class="form-data" enctype="multipart/form-data">
+    {% if data == "material" %}
+    <span>{{ form.submit(class="btn btn-success") }}&nbsp;&nbsp;</span>
+    <a href="{{ url_for('material') }}" class="btn btn-secondary">Cancel</a>
+    <a href="{{ url_for('delete_material', data='material', id=id) }}" class="submit-delete" style="width: fit-content;position: absolute;right: 0%;">Delete</a>
+        {{ form.hidden_tag()}}
+        <table>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>{{ form.barcode.label(class="form-label")}}</td>
+                <td>&ensp;&ensp;&ensp;</td>
+                <td style="width: 25cm;">{{ form.barcode(class="input-field", value=material_update.barcode) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.name.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.name(class="input-field", value=material_update.name) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.qty.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.qty(type="number", class="input-field", value=material_update.qty, step="0.1", min="0", oninput="this.value = 
+                    !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.uom.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.uom(class="input-field", value=material_update.uom) }}</td>
+            </tr>
+            <tr>
+                <td>{{ form.consumable.label(class="form-label")}}</td>
+                <td></td>
+                <td><div class="form-check form-switch">{{ form.consumable(class="form-check-input", role="switch") }}</div></td>
+            </tr>    
+            <tr>
+                <td>{{ form.storage_location.label(class="form-label")}}</td>
+                <td></td>
+                <td>{{ form.storage_location(class="input-field") }}</td>
+            </tr>
+            <tr>
+                <td class="form-label">Upload Image</td>
+                <td></td>
+                <td>{{ form.image(class="form-control") }}</td>
+            </tr>  
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>
+                    Date created
+                </td>
+                <td> : 
+                </td>
+                <td>
+                    {{ material_update.date_created }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Date modified
+                </td>
+                <td> : 
+                </td>
+                <td>
+                    {{ material_update.date_modified }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Created by
+                </td>
+                <td> : 
+                </td>
+                <td>
+                    {% if created_by_user.username %}
+                        {{ created_by_user.username }}
+                    {% else %}
+                        ---unknown user---
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Last Modified by
+                </td>
+                <td> : 
+                </td>
+                <td>
+                    {% if modified_by_user.username %}
+                        {{ modified_by_user.username }}
+                    {% else %}
+                        ---unknown user---
+                    {% endif %}
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    {% if material_update.image != 'N/A'%}
+                        <img src="{{ url_for('static', filename ='img/upload/material/'+material_update.image ) }}" class="form-image" title="image" alt="Image not uploaded"><br><br>
+                        <div class="form-check form-switch">{{ form.del_image(class="form-check-input", role="switch") }}{{ form.del_image.label(class="form-label")}}</div>
+                    {% else %}
+                        <span>No image</span>
+                    {% endif %}
+                </td>
+            </tr>
+            
+        </table>
+        
+    {% elif data == "product" %}
+    <div>{{ form.submit(class="btn btn-success") }}&nbsp;&nbsp;
+        <a href="{{ url_for('product') }}" class="btn btn-secondary">Cancel</a>
+        <a href="{{ url_for('delete_product', data='product', id=id) }}" class="submit-delete" style="width: fit-content;position: absolute;right: 0%;">Delete</a>
+    </div>
+        {{ form.hidden_tag()}}
+    <table>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>{{ form.model_no.label(class="form-label")}}</td>
+            <td>&ensp;&ensp;&ensp;</td>
+            <td style="width: 25cm;">{{ form.model_no(class="input-field", value=product_update.model_no) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.name.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.name(class="input-field", value=product_update.name) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.qty.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.qty(type="number", class="input-field", value=product_update.qty, step="0.1", min="0", oninput="this.value = 
+                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.qty_uom.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.qty_uom(class="input-field", selected=product_update.qty_uom) }}</td>
+        </tr>  
+        <tr>
+            <td>{{ form.weight.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.weight(class="input-field", value=product_update.weight, step="0.1", min="0", oninput="this.value = 
+                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.weight_uom.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.weight_uom(class="input-field", value=product_update.weight_uom) }}</td>
+        </tr>  
+        <tr>
+            <td>{{ form.storage_location.label(class="form-label") }}</td>
+            <td></td>
+            <td>{{ form.storage_location(class="input-field", value=product_update.storage_location) }}</td>
+        </tr> 
+        <tr>
+            <td>{{ form.currency.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.currency(class="input-field", value=product_update.price) }}</td>
+        </tr> 
+        <tr>
+            <td>{{ form.price.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.price(class="input-field", value=product_update.price, min="0", oninput="this.value = 
+                !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null") }}</td>
+        </tr> 
+        <tr>
+            <td class="form-label">Upload Image</td>
+            <td></td>
+            <td>{{ form.image(class="form-control") }}</td>
+        </tr>  
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>
+                Date created
+            </td>
+            <td> : </td>
+            <td>
+                {{ product_update.date_created }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date modified
+            </td>
+            <td> : </td>
+            <td>
+                {{ product_update.date_modified }}
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                Created by
+            </td>
+            <td> : 
+            </td>
+            <td>
+                {% if created_by_user.username %}
+                    {{ created_by_user.username }}
+                {% else %}
+                    ---unknown user---
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Last Modified by
+            </td>
+            <td> : 
+            </td>
+            <td>
+                {% if modified_by_user.username %}
+                    {{ modified_by_user.username }}
+                {% else %}
+                    ---unknown user---
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                {% if product_update.image != 'N/A'%}
+                    <img src="{{ url_for('static', filename ='img/upload/product/'+product_update.image ) }}" class="form-image" title="image" alt="Image not uploaded">
+                    <span class="form-check form-switch">{{ form.del_image(class="form-check-input", role="switch") }}{{ form.del_image.label(class="form-label")}}</span>
+                {% else %}
+                    <span>No image</span>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    
+    {% elif data == "storage_location" %}
+    <div>{{ form.submit(class="btn btn-success") }}&nbsp;&nbsp;
+        <a href="{{ url_for('storage_location') }}" class="btn btn-secondary">Cancel</a>
+        <a href="#" class="submit-delete" style="width: fit-content;position: absolute;right: 0%;">Delete</a>
+    </div>
+        {{ form.hidden_tag()}}
+    <table>
+        <tr>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td>{{ form.storage_location_code.label(class="form-label")}}</td>
+            <td>&ensp;&ensp;&ensp;</td>
+            <td style="width: 25cm;">{{ form.storage_location_code(class="input-field", value=storage_location_update.storage_location_code) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.storage_location_name.label(class="form-label")}}</td>
+            <td></td>
+            <td>{{ form.storage_location_name(class="input-field", value=storage_location_update.storage_location_name) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form.usable.label(class="form-label")}}</td>
+            <td></td>
+            <td><div class="form-check form-switch">{{ form.usable(class="form-check-input", role="switch") }}</div></td>
+        </tr>  
+        <tr>
+            <td>
+                Date created
+            </td>
+            <td> : </td>
+            <td>
+                {{ storage_location_update.date_created }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Date modified
+            </td>
+            <td> : </td>
+            <td>
+                {{ storage_location_update.date_modified }}
+            </td>
+        </tr>
+        
+    </table>
+    {% endif %}
+</form>
+{% endblock %}

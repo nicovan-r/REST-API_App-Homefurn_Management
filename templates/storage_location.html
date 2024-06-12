@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+Storage Location
+                </div>
+            </div>
+                <span><a class="submit" href="{{ url_for('create_storage_location', data='storage_location') }}"style="text-decoration: none;color: white;">New</a></span>
+                <table id="table" class="display" style="width: 100%;background-color: rgba(255, 255, 255, 0.7)">
+                    <thead style="font-weight: bold;background-color: rgba(255, 255, 255, 0.7)">
+                        <tr>
+                            <td>Str loc. Code</td>
+                            <td>Str loc. Name</td>
+                            <td>Still usable?</td>   
+                            <td>Action</td> 
+                        </tr>
+                    </thead>
+                    
+                    <tbody style="background-color: rgba(255, 255, 255, 0.7)">
+                        {% for all_storage_location in all_storage_location %}
+                            <tr>
+                            <td>{{ all_storage_location.storage_location_code }}</td>
+                            <td>{{ all_storage_location.storage_location_name }}</td>
+                            <td>{% if all_storage_location.usable == True %}
+                                Yes
+                                {% else %}
+                                No
+                                {% endif %}
+                            </td>
+                            <td> <a href="{{ url_for('update_storage_location', data='storage_location', id=all_storage_location.id) }}" class="submit-edit">look/edit</a> 
+                                <br>
+                                <a href="{{ url_for('delete_storage_location', id=all_storage_location.id) }}" class="submit-delete">delete</a>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+{% endblock %}
