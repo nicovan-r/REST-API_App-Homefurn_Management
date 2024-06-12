@@ -1,3 +1,4 @@
+Homefurn Management App
 This app is created by Nicovan Renardy
 
 This app uses MySQL database and SQLAlchemy connected to web interface through REST API Create virtual environment, pip install packages, activate MySQL, and run python app.py to use this app.
