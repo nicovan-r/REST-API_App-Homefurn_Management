@@ -10,7 +10,6 @@ import os
 import uuid as uuid
 from datetime import datetime
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-import subprocess
 
 #create flask instance
 app = Flask(__name__)
@@ -465,6 +464,7 @@ def delete_user(id):
                                 my_users=my_users)
     else:
         flash("You do not have right to do this action.")  
+        return redirect(url_for('home'))
 
 #storage_location to show avaiable storage location in database
 @app.route('/storage_location')
@@ -604,6 +604,7 @@ def delete_storage_location(id):
                                 form=form)
     else:
         flash("You do not have right to do this action.")  
+        return redirect(url_for('home'))
 
 # material to show material list from database
 @app.route('/material')
@@ -777,10 +778,10 @@ def delete_material(id):
     current_user_id = current_user.id
     active_user_id = Users.query.filter_by(id=current_user_id).first()
 
-    if my_materials.created_by != current_user_id and active_user_id.access_right == 'ONLY_CREATOR' and active_user_id.admin != 1:
+    if material_delete.created_by != current_user_id and active_user_id.access_right == 'ONLY_CREATOR' and active_user_id.admin != 1:
         flash("You do not have right to operate this action.")
         return redirect(url_for('home'))
-    elif my_materials.created_by == current_user_id or active_user_id.access_right == 'ALL_CREATOR' or active_user_id.admin == 1:
+    elif material_delete.created_by == current_user_id or active_user_id.access_right == 'ALL_CREATOR' or active_user_id.admin == 1:
         try:
             if material_delete.image != "N/A":
                 os.remove(material_upload_folder+'/'+material_delete.image)
@@ -985,12 +986,12 @@ def delete_product(id):
     form = ProductForm()
     current_user_id = current_user.id
     my_product = ProductList.query.filter_by(id=current_user_id).first()
-    active_user_id = Users.query.filter_by(id=current_user_id)
+    active_user_id = Users.query.filter_by(id=current_user_id).first()
 
-    if my_product.created_by != current_user_id and active_user_id.access_right == 'ONLY_CREATOR' and active_user_id.admin != 1:
+    if product_delete.created_by != current_user_id and active_user_id.access_right == 'ONLY_CREATOR' and active_user_id.admin != 1:
         flash("You do not have right to operate this action.")
         return redirect(url_for('home'))
-    elif my_product.created_by == current_user_id or active_user_id.access_right == 'ALL_CREATOR' or active_user_id.admin == 1:
+    elif product_delete.created_by == current_user_id or active_user_id.access_right == 'ALL_CREATOR' or active_user_id.admin == 1:
         try:
             if product_delete.image != "N/A":
                 os.remove(product_upload_folder+'/'+product_delete.image)
@@ -1004,7 +1005,7 @@ def delete_product(id):
                                 page='Delete a product',
                                 form=form,
                                 model_no=model_no,
-                                my_products=my_products)
+                                my_product=my_product)
         except:
             flash('Product delete failed, error is occured.')
             return render_template("product_list.html",
@@ -1012,8 +1013,7 @@ def delete_product(id):
                                 page='Delete a product',
                                 form=form,
                                 model_no=model_no,
-                                my_products=my_products)
-
+                                my_product=my_product)
 
 
 if __name__ == '__main__':
